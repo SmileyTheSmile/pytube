@@ -398,13 +398,13 @@ def get_ytcfg(html: str) -> str:
 
 
 def apply_signature(stream_manifest: Dict, vid_info: Dict, js: str) -> None:
-    """Apply the decrypted signature to the stream manifest.
+    """
+    Apply the decrypted signature to the stream manifest.
 
     :param dict stream_manifest:
         Details of the media streams available.
     :param str js:
         The contents of the base.js asset file.
-
     """
     cipher = Cipher(js=js)
 
@@ -454,7 +454,7 @@ def apply_signature(stream_manifest: Dict, vid_info: Dict, js: str) -> None:
         stream_manifest[i]["url"] = url
 
 
-def apply_descrambler(stream_data: Dict) -> None:
+def apply_descrambler(stream_data: Dict) -> Optional[List]:
     """Apply various in-place transforms to YouTube's media stream data.
 
     Creates a ``list`` of dictionaries by string splitting on commas, then
@@ -470,7 +470,6 @@ def apply_descrambler(stream_data: Dict) -> None:
     >>> apply_descrambler(d, 'foo')
     >>> print(d)
     {'foo': [{'bar': '1', 'var': 'test'}, {'em': '5', 't': 'url encoded'}]}
-
     """
     if 'url' in stream_data:
         return None
